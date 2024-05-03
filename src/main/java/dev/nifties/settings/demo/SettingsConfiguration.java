@@ -8,8 +8,10 @@ import org.springframework.context.annotation.Configuration;
 public class SettingsConfiguration {
 
     @Bean
-    public SettingsService settingsService() {
-        return new SimpleSettingsService();
+    public SimpleSettingsService settingsService() {
+        SimpleSettingsService settingsService = new SimpleSettingsService();
+        settingsService.put(ApplicationSettings.class.getName() + ".name", "NiftySettingsDemo");
+        return settingsService;
     }
 
     @Bean
