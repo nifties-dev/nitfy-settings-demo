@@ -9,14 +9,21 @@ import org.springframework.context.annotation.Configuration;
 @Slf4j
 public class SettingsConfiguration {
 
+
+
     @Bean
-    public VolatileSettingsSource settingsService() {
+    public SettingsService settingsService() {
         SettingsService instance = SettingsServiceFactory.getInstance();
         log.info("SettingsService: {}", instance);
-        VolatileSettingsSource settingsService =
-                ((MultiSourceSettingsService)instance).findSettingsSource((VolatileSettingsSource.class)).get();
-        settingsService.put(ApplicationSettings.class.getName() + ".name", "NiftySettingsDemo");
-        return settingsService;
+        return instance;
+    }
+
+    @Bean
+    public VolatileSettingsSource volatileSettingsSource() {
+        VolatileSettingsSource volatileSettingsSource =
+                ((MultiSourceSettingsService)settingsService()).findSettingsSource((VolatileSettingsSource.class)).get();
+        volatileSettingsSource.put(ApplicationSettings.class.getName() + ".name", "NiftySettingsDemo");
+        return volatileSettingsSource;
     }
 
     @Bean
