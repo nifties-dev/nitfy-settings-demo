@@ -1,10 +1,10 @@
-import dev.nifties.settings.SettingsService;
+import dev.nifties.settings.SettingsSource;
 
 module nifty.settings.demo {
+    requires static lombok;
     requires nifty.settings.client;
-    requires lombok;
     requires org.slf4j;
     requires spring.beans;
     requires spring.context;
-    provides SettingsService with dev.nifties.settings.demo.VolatileSettingsSource;
+    provides SettingsSource with dev.nifties.settings.demo.VolatileSettingsSource;
 }
