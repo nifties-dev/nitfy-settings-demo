@@ -6,5 +6,7 @@ module nifty.settings.demo {
     requires org.slf4j;
     requires spring.beans;
     requires spring.context;
-    provides SettingsSource with dev.nifties.settings.demo.VolatileSettingsSource;
+    provides SettingsSource with
+            dev.nifties.settings.demo.ReadOnlySettingsSource,
+            dev.nifties.settings.demo.VolatileSettingsSource;
 }

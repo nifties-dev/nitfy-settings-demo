@@ -5,21 +5,24 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+import java.util.Map;
+
 @Configuration
 @Slf4j
 public class SettingsConfiguration {
 
     @Bean
     public SettingsManager settingsManager() {
-        return SettingsManager.builder().build();
+        SettingsManager settingsManager = SettingsManager.builder().build();
+        ((MultiSourceSettingsService)settingsManager.getService())
+                .findSettingsSource(ReadOnlySettingsSource.class).get().setValues(
+                        Map.of(ApplicationSettings.class.getName() + ".name", "NiftySettingsDemo"));
+        return settingsManager;
     }
 
     @Bean
     public VolatileSettingsSource volatileSettingsSource() {
-        VolatileSettingsSource volatileSettingsSource =
-                ((MultiSourceSettingsService)settingsManager().getService())
+        return ((MultiSourceSettingsService)settingsManager().getService())
                         .findSettingsSource((VolatileSettingsSource.class)).get();
-        volatileSettingsSource.put(ApplicationSettings.class.getName() + ".name", "NiftySettingsDemo");
-        return volatileSettingsSource;
     }
 }
