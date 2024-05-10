@@ -8,9 +8,9 @@ import java.util.stream.Collectors;
 
 public class ReadOnlySettingsSource implements SettingsSource {
 
-    private Map<String, SettingValue> values;
+    private final Map<String, SettingValue> values;
 
-    public void setValues(Map<String, Object> values) {
+    public ReadOnlySettingsSource(Map<String, Object> values) {
         this.values = values.entrySet().stream()
                 .collect(Collectors.toMap(Map.Entry::getKey, e -> new SettingValue(e.getValue())));
     }
